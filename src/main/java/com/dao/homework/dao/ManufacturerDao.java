@@ -13,5 +13,7 @@ public interface ManufacturerDao {
 
     boolean delete(Long manufacturerId);
 
-    List<Manufacturer> getAllManufacturers();
+    boolean delete(Manufacturer manufacturer);
+
+    List<Manufacturer> getAll();
 }
