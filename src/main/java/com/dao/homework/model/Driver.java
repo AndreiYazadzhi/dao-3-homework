@@ -33,4 +33,11 @@ public class Driver {
     public void setLicenseNumber(String licenseNumber) {
         this.licenseNumber = licenseNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Driver{" + "id=" + id + ", name='"
+                + name + '\'' + ", licenseNumber='"
+                + licenseNumber + '\'' + '}';
+    }
 }
