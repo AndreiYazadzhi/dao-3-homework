@@ -6,6 +6,7 @@ import com.dao.homework.model.Manufacturer;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 @Dao
 public class ManufacturerDaoImpl implements ManufacturerDao {
@@ -24,30 +25,16 @@ public class ManufacturerDaoImpl implements ManufacturerDao {
 
     @Override
     public Manufacturer update(Manufacturer manufacturer) {
-        if (!getAllManufacturers().contains(manufacturer)) {
-            throw new RuntimeException("Can`t find this element!");
-        }
-        manufacturer.setId(manufacturer.getId());
-        manufacturer.setCountry(manufacturer.getCountry());
+        IntStream.range(0, Storage.manufacturers.size())
+                .filter(i -> Storage.manufacturers.get(i).getId().equals(manufacturer.getId()))
+                .findFirst()
+                .ifPresent(i -> Storage.manufacturers.set(i, manufacturer));
         return manufacturer;
     }
 
     @Override
-    public boolean delete(Manufacturer manufacturer) {
-        if (!getAllManufacturers().contains(manufacturer)) {
-            throw new RuntimeException("Can`t find this element!");
-        }
-        Storage.manufacturers.remove(manufacturer.getId().intValue());
-        return true;
-    }
-
-    @Override
-    public boolean deleteById(Long manufacturerId) {
-        if (!getAllManufacturers().contains(getById(manufacturerId).get())) {
-            throw new RuntimeException("Can`t find this element!");
-        }
-        Storage.manufacturers.remove(manufacturerId);
-        return true;
+    public boolean delete(Long manufacturerId) {
+        return getAllManufacturers().removeIf(m -> m.getId().equals(manufacturerId));
     }
 
     @Override

@@ -8,7 +8,7 @@ public interface ManufacturerService {
 
     Manufacturer get(Long id);
 
-    List<Manufacturer> getAllManufacturers();
+    List<Manufacturer> getAll();
 
     Manufacturer update(Manufacturer manufacturer);
 

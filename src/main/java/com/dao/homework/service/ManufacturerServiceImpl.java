@@ -22,7 +22,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public List<Manufacturer> getAllManufacturers() {
+    public List<Manufacturer> getAll() {
         return manufacturerDao.getAllManufacturers();
     }
 
@@ -33,6 +33,6 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     public boolean deleteById(Long id) {
-        return manufacturerDao.deleteById(id);
+        return manufacturerDao.delete(id);
     }
 }

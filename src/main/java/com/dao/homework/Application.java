@@ -14,13 +14,13 @@ public class Application {
         Manufacturer astonManufacturer = new Manufacturer("Aston Martin", "England");
         manufacturerService.create(bmwManufacturer);
         manufacturerService.create(astonManufacturer);
-        System.out.println(manufacturerService.getAllManufacturers());
+        System.out.println(manufacturerService.getAll());
         Manufacturer updatedManufacturer = manufacturerService.get(1L);
         updatedManufacturer.setName("Gold");
         updatedManufacturer.setCountry("Ukraine");
         manufacturerService.update(updatedManufacturer);
-        System.out.println(manufacturerService.getAllManufacturers());
+        System.out.println(manufacturerService.getAll());
         manufacturerService.deleteById(0L);
-        System.out.println(manufacturerService.get(0L));
+        System.out.println(manufacturerService.get(1L));
     }
 }
