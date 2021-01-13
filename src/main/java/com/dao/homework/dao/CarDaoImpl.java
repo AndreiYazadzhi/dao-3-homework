@@ -6,10 +6,12 @@ import com.dao.homework.model.Car;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Dao
 public class CarDaoImpl implements CarDao {
+
     @Override
     public Car create(Car car) {
         Storage.addCar(car);
@@ -45,5 +47,16 @@ public class CarDaoImpl implements CarDao {
     @Override
     public List<Car> getAll() {
         return Storage.cars;
+    }
+
+    @Override
+    public List<Car> getAllByDriver(Long driverId) {
+        return getAll().stream()
+                .filter(c -> c.getDrivers()
+                        .stream()
+                        .map(d -> d.getId())
+                        .collect(Collectors.toList())
+                        .contains(driverId))
+                .collect(Collectors.toList());
     }
 }
