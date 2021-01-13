@@ -40,20 +40,20 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
     public Optional<Manufacturer> getById(Long manufacturerId) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + MANUFACTURER_ID
                 + "= ? AND " + DELETED + " = false";
+        Manufacturer manufacturer = new Manufacturer();
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                Manufacturer manufacturer = new Manufacturer(resultSet.getString(MANUFACTURER_ID),
-                        resultSet.getString(MANUFACTURER_NAME));
+                manufacturer = new Manufacturer(resultSet.getObject(MANUFACTURER_ID, String.class),
+                        resultSet.getObject(MANUFACTURER_NAME, String.class));
                 manufacturer.setId(manufacturerId);
-                return Optional.of(manufacturer);
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Can`t get data with id:"
                     + manufacturerId + "from DB ", e);
         }
-        return Optional.empty();
+        return Optional.ofNullable(manufacturer);
     }
 
     @Override
@@ -98,8 +98,8 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
             ResultSet resultSet = statement.executeQuery(query);
             List<Manufacturer> allManufacturers = new ArrayList<>();
             while (resultSet.next()) {
-                Manufacturer manufacturer = new Manufacturer(resultSet.getString(MANUFACTURER_ID),
-                        resultSet.getString(MANUFACTURER_NAME));
+                Manufacturer manufacturer = new Manufacturer(resultSet.getObject(MANUFACTURER_ID, String.class),
+                        resultSet.getObject(MANUFACTURER_NAME, String.class));
                 allManufacturers.add(manufacturer);
             }
             return allManufacturers;
