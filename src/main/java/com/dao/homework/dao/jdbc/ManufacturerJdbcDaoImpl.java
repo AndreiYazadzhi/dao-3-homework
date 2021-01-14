@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,13 +24,19 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
 
     @Override
     public Manufacturer create(Manufacturer manufacturer) {
-        String query = "INSERT INTO manufacturers "
-                + "(" + MANUFACTURER_NAME + "," + MANUFACTURER_COUNTRY + ") VALUES(?, ?)";
+        String query = "INSERT INTO " + TABLE_NAME
+                + " (" + MANUFACTURER_NAME + "," + MANUFACTURER_COUNTRY + ") VALUES (?, ?)";
         try (Connection connection = ConnectionUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query,
+                        Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, manufacturer.getName());
             statement.setString(2, manufacturer.getCountry());
             statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                manufacturer.setId(resultSet.getObject(1, Long.class));
+            }
+            resultSet.close();
             return manufacturer;
         } catch (SQLException e) {
             throw new DataProcessingException("This data can't be added to table ", e);
@@ -39,17 +46,19 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
     @Override
     public Optional<Manufacturer> getById(Long manufacturerId) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + MANUFACTURER_ID
-                + "= ? AND " + DELETED + " = false";
+                + "=? AND " + DELETED + " = false";
         Manufacturer manufacturer = new Manufacturer();
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
-            ResultSet resultSet = statement.executeQuery(query);
+            statement.setLong(1, manufacturerId);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 manufacturer = getManufacturer(resultSet);
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new DataProcessingException("Can`t get data with id:"
-                    + manufacturerId + "from DB ", e);
+                    + manufacturerId + " from DB ", e);
         }
         return Optional.of(manufacturer);
     }
@@ -57,7 +66,7 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
     @Override
     public Manufacturer update(Manufacturer manufacturer) {
         String query = "UPDATE " + TABLE_NAME + " SET " + MANUFACTURER_NAME
-                + "= ?, " + MANUFACTURER_COUNTRY + "= ?, "
+                + "= ?, " + MANUFACTURER_COUNTRY + "= ? "
                 + " WHERE " + MANUFACTURER_ID
                 + "= ? AND " + DELETED + " = false";
         try (Connection connection = ConnectionUtil.getConnection();
@@ -75,7 +84,7 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
     @Override
     public boolean delete(Long manufacturerId) {
         String query = "UPDATE " + TABLE_NAME + " SET " + DELETED
-                + "= ?,  WHERE " + MANUFACTURER_ID
+                + "= ?  WHERE " + MANUFACTURER_ID
                 + "= ?";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
@@ -98,6 +107,7 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
             while (resultSet.next()) {
                 allManufacturers.add(getManufacturer(resultSet));
             }
+            resultSet.close();
             return allManufacturers;
         } catch (SQLException e) {
             throw new RuntimeException("Can`t established connection to DB ", e);
