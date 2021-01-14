@@ -36,7 +36,6 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
             if (resultSet.next()) {
                 manufacturer.setId(resultSet.getObject(1, Long.class));
             }
-            resultSet.close();
             return manufacturer;
         } catch (SQLException e) {
             throw new DataProcessingException("This data can't be added to table ", e);
@@ -55,7 +54,6 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
             while (resultSet.next()) {
                 manufacturer = getManufacturer(resultSet);
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new DataProcessingException("Can`t get data with id:"
                     + manufacturerId + " from DB ", e);
