@@ -2,6 +2,7 @@ package com.dao.homework.dao.jdbc;
 
 import com.dao.homework.dao.ManufacturerDao;
 import com.dao.homework.exceptions.DataProcessingException;
+import com.dao.homework.lib.Dao;
 import com.dao.homework.model.Manufacturer;
 import com.dao.homework.util.ConnectionUtil;
 import java.sql.Connection;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Dao
 public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
     private static final String TABLE_NAME = "manufacturer";
     private static final String MANUFACTURER_NAME = "manufacturer_name";

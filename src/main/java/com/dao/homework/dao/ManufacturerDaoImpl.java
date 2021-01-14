@@ -1,14 +1,12 @@
 package com.dao.homework.dao;
 
 import com.dao.homework.db.Storage;
-import com.dao.homework.lib.Dao;
 import com.dao.homework.model.Manufacturer;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-@Dao
 public class ManufacturerDaoImpl implements ManufacturerDao {
     @Override
     public Manufacturer create(Manufacturer manufacturer) {
