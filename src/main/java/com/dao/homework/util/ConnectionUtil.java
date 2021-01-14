@@ -16,14 +16,13 @@ public class ConnectionUtil {
 
     private static final String USER = "root";
     private static final String PASSWORD = "1234";
+    private static final String url = "jdbc:mysql://localhost:3306/"
+            + "taxi_service?serverTimezone=UTC";
 
     public static Connection getConnection() {
         Properties dbProperties = new Properties();
         dbProperties.put("user", USER);
         dbProperties.put("password", PASSWORD);
-
-        String url = "jdbc:mysql://localhost:3306/"
-                + "taxi_service?serverTimezone=UTC";
         try {
             return DriverManager.getConnection(url, dbProperties);
         } catch (SQLException e) {

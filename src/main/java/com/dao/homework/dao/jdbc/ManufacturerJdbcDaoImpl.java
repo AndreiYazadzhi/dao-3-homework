@@ -2,7 +2,6 @@ package com.dao.homework.dao.jdbc;
 
 import com.dao.homework.dao.ManufacturerDao;
 import com.dao.homework.exceptions.DataProcessingException;
-import com.dao.homework.lib.Dao;
 import com.dao.homework.model.Manufacturer;
 import com.dao.homework.util.ConnectionUtil;
 import java.sql.Connection;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Dao
 public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
     private static final String TABLE_NAME = "manufacturer";
     private static final String MANUFACTURER_NAME = "manufacturer_name";
@@ -38,7 +36,8 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
             }
             return manufacturer;
         } catch (SQLException e) {
-            throw new DataProcessingException("This data can't be added to table ", e);
+            throw new DataProcessingException("This data:" + manufacturer
+                    + "can't be added to table ", e);
         }
     }
 
@@ -46,7 +45,7 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
     public Optional<Manufacturer> getById(Long manufacturerId) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + MANUFACTURER_ID
                 + "=? AND " + DELETED + " = false";
-        Manufacturer manufacturer = new Manufacturer();
+        Manufacturer manufacturer = null;
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, manufacturerId);
@@ -58,7 +57,7 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
             throw new DataProcessingException("Can`t get data with id:"
                     + manufacturerId + " from DB ", e);
         }
-        return Optional.of(manufacturer);
+        return Optional.ofNullable(manufacturer);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
             statement.executeUpdate();
             return manufacturer;
         } catch (SQLException e) {
-            throw new DataProcessingException("Can`t update this data ", e);
+            throw new DataProcessingException("Can`t update this data: " + manufacturer, e);
         }
     }
 
@@ -105,10 +104,9 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
             while (resultSet.next()) {
                 allManufacturers.add(getManufacturer(resultSet));
             }
-            resultSet.close();
             return allManufacturers;
         } catch (SQLException e) {
-            throw new RuntimeException("Can`t established connection to DB ", e);
+            throw new RuntimeException("Can`t get all data from DB ", e);
         }
     }
 
