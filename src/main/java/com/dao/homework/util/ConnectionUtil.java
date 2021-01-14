@@ -16,7 +16,7 @@ public class ConnectionUtil {
 
     private static final String USER = "root";
     private static final String PASSWORD = "1234";
-    private static final String url = "jdbc:mysql://localhost:3306/"
+    private static final String URL = "jdbc:mysql://localhost:3306/"
             + "taxi_service?serverTimezone=UTC";
 
     public static Connection getConnection() {
@@ -24,7 +24,7 @@ public class ConnectionUtil {
         dbProperties.put("user", USER);
         dbProperties.put("password", PASSWORD);
         try {
-            return DriverManager.getConnection(url, dbProperties);
+            return DriverManager.getConnection(URL, dbProperties);
         } catch (SQLException e) {
             throw new RuntimeException("Can`t established connection to DB ", e);
         }
