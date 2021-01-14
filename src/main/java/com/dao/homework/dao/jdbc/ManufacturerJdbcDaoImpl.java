@@ -45,15 +45,13 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
                 PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                manufacturer = new Manufacturer(resultSet.getObject(MANUFACTURER_ID, String.class),
-                        resultSet.getObject(MANUFACTURER_NAME, String.class));
-                manufacturer.setId(manufacturerId);
+                manufacturer = getManufacturer(resultSet);
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Can`t get data with id:"
                     + manufacturerId + "from DB ", e);
         }
-        return Optional.ofNullable(manufacturer);
+        return Optional.of(manufacturer);
     }
 
     @Override
@@ -98,13 +96,19 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
             ResultSet resultSet = statement.executeQuery(query);
             List<Manufacturer> allManufacturers = new ArrayList<>();
             while (resultSet.next()) {
-                Manufacturer manufacturer = new Manufacturer(resultSet.getObject(MANUFACTURER_ID, String.class),
-                        resultSet.getObject(MANUFACTURER_NAME, String.class));
-                allManufacturers.add(manufacturer);
+                allManufacturers.add(getManufacturer(resultSet));
             }
             return allManufacturers;
         } catch (SQLException e) {
             throw new RuntimeException("Can`t established connection to DB ", e);
         }
+    }
+
+    private Manufacturer getManufacturer(ResultSet resultSet) throws SQLException {
+        Manufacturer manufacturer = new Manufacturer(resultSet
+                .getObject(MANUFACTURER_NAME, String.class),
+                resultSet.getObject(MANUFACTURER_COUNTRY, String.class));
+        manufacturer.setId(resultSet.getObject(MANUFACTURER_ID, Long.class));
+        return manufacturer;
     }
 }
