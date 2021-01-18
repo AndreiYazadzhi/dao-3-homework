@@ -18,15 +18,10 @@ import java.util.Optional;
 
 @Dao
 public class CarDaoJdbcImpl implements CarDao {
-    private static final String TABLE_NAME = "taxi_service.cars";
-    private static final String CARS_MODEL = "cars_model";
-    private static final String MANUFACTURER_ID = "manufacturer_id";
-    private static final String DELETED = "deleted";
 
     @Override
     public Car create(Car car) {
-        String query = "INSERT INTO " + TABLE_NAME + "("
-                + CARS_MODEL + "," + MANUFACTURER_ID + ") "
+        String query = "INSERT INTO cars(cars_model,manufacturer_id) "
                 + "VALUES (?, ?)";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection
@@ -57,7 +52,7 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "    ON c.cars_id = dr_ca.car_id\n"
                 + "    LEFT JOIN manufacturer m\n"
                 + "    ON c.manufacturer_id = m.manufacturer_id\n"
-                + " WHERE c.cars_id = ?";
+                + " WHERE c.cars_id = ? AND c.deleted = false";
         Car car = null;
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
@@ -105,7 +100,7 @@ public class CarDaoJdbcImpl implements CarDao {
 
     @Override
     public boolean delete(Long carsId) {
-        String query = "UPDATE " + TABLE_NAME + " SET " + DELETED
+        String query = "UPDATE cars SET deleted"
                 + "= ?  WHERE cars_id = ?";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
@@ -124,12 +119,13 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "c.cars_id,c.cars_model,drivers_id,m.manufacturer_id,"
                 + "m.manufacturer_name,m.manufacturer_country\n"
                 + "FROM cars c\n"
-                + "\tLEFT JOIN drivers_cars dr_ca\n"
-                + "    ON c.cars_id = dr_ca.car_id\n"
+                + "\tLEFT JOIN drivers_cars dc\n"
+                + "    ON c.cars_id = dc.car_id\n"
                 + "    LEFT JOIN drivers d\n"
-                + "    ON c.cars_id = dr_ca.car_id\n"
+                + "    ON c.cars_id = dc.car_id\n"
                 + "    LEFT JOIN manufacturer m\n"
-                + "    ON c.manufacturer_id = m.manufacturer_id";
+                + "    ON c.manufacturer_id = m.manufacturer_id"
+                + "    WHERE c.deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -150,14 +146,14 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "c.cars_id,c.cars_model,drivers_id,m.manufacturer_id,"
                 + "m.manufacturer_name,m.manufacturer_country\n"
                 + "FROM cars c\n"
-                + "\tLEFT JOIN drivers_cars dr_ca\n"
-                + "    ON c.cars_id = dr_ca.car_id\n"
+                + "\tLEFT JOIN drivers_cars dc\n"
+                + "    ON c.cars_id = dc.car_id\n"
                 + "    LEFT JOIN drivers d\n"
-                + "    ON c.cars_id = dr_ca.car_id\n"
+                + "    ON c.cars_id = dc.car_id\n"
                 + "    LEFT JOIN manufacturer m\n"
                 + "    ON c.manufacturer_id = m.manufacturer_id\n"
-                + "WHERE d.drivers_id = ?\n"
-                + "ORDER BY d.drivers_id";
+                + "WHERE d.drivers_id = ?"
+                + " AND d.deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, driverId);
