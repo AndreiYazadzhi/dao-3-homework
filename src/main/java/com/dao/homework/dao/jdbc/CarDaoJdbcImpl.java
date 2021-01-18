@@ -34,6 +34,10 @@ public class CarDaoJdbcImpl implements CarDao {
             statement.setString(1, car.getModel());
             statement.setLong(2, car.getManufacturer().getId());
             statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                car.setId(resultSet.getObject(1, Long.class));
+            }
             return car;
         } catch (SQLException e) {
             throw new DataProcessingException("Can`t insert this car:" + car + "into DB ", e);
