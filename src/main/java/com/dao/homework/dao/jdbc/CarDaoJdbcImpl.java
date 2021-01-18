@@ -46,12 +46,12 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "c.cars_id,c.cars_model,drivers_id,m.manufacturer_id,"
                 + "m.manufacturer_name,m.manufacturer_country\n"
                 + "FROM cars c\n"
-                + "\tLEFT JOIN drivers_cars dr_ca\n"
-                + "    ON c.cars_id = dr_ca.car_id\n"
-                + "    LEFT JOIN drivers d\n"
-                + "    ON c.cars_id = dr_ca.car_id\n"
-                + "    LEFT JOIN manufacturer m\n"
-                + "    ON c.manufacturer_id = m.manufacturer_id\n"
+                + "LEFT JOIN drivers_cars dr_ca\n"
+                + "ON c.cars_id = dr_ca.car_id\n"
+                + "LEFT JOIN drivers d\n"
+                + "ON c.cars_id = dr_ca.car_id\n"
+                + "LEFT JOIN manufacturer m\n"
+                + "ON c.manufacturer_id = m.manufacturer_id\n"
                 + " WHERE c.cars_id = ? AND c.deleted = false";
         Car car = null;
         try (Connection connection = ConnectionUtil.getConnection();
@@ -119,13 +119,13 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "c.cars_id,c.cars_model,drivers_id,m.manufacturer_id,"
                 + "m.manufacturer_name,m.manufacturer_country\n"
                 + "FROM cars c\n"
-                + "\tLEFT JOIN drivers_cars dc\n"
-                + "    ON c.cars_id = dc.car_id\n"
-                + "    LEFT JOIN drivers d\n"
-                + "    ON c.cars_id = dc.car_id\n"
-                + "    LEFT JOIN manufacturer m\n"
-                + "    ON c.manufacturer_id = m.manufacturer_id"
-                + "    WHERE c.deleted = false";
+                + "LEFT JOIN drivers_cars dc\n"
+                + "ON c.cars_id = dc.car_id\n"
+                + "LEFT JOIN drivers d\n"
+                + "ON c.cars_id = dc.car_id\n"
+                + "LEFT JOIN manufacturer m\n"
+                + "ON c.manufacturer_id = m.manufacturer_id "
+                + "WHERE c.deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -146,12 +146,12 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "c.cars_id,c.cars_model,drivers_id,m.manufacturer_id,"
                 + "m.manufacturer_name,m.manufacturer_country\n"
                 + "FROM cars c\n"
-                + "\tLEFT JOIN drivers_cars dc\n"
-                + "    ON c.cars_id = dc.car_id\n"
-                + "    LEFT JOIN drivers d\n"
-                + "    ON c.cars_id = dc.car_id\n"
-                + "    LEFT JOIN manufacturer m\n"
-                + "    ON c.manufacturer_id = m.manufacturer_id\n"
+                + "LEFT JOIN drivers_cars dc\n"
+                + "ON c.cars_id = dc.car_id\n"
+                + "LEFT JOIN drivers d\n"
+                + "ON c.cars_id = dc.car_id\n"
+                + "LEFT JOIN manufacturer m\n"
+                + "ON c.manufacturer_id = m.manufacturer_id\n"
                 + "WHERE d.drivers_id = ?"
                 + " AND d.deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
