@@ -46,10 +46,10 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "c.cars_id,c.cars_model,drivers_id,m.manufacturer_id,"
                 + "m.manufacturer_name,m.manufacturer_country\n"
                 + "FROM cars c\n"
-                + "LEFT JOIN drivers_cars dr_ca\n"
-                + "ON c.cars_id = dr_ca.car_id\n"
+                + "LEFT JOIN drivers_cars dc\n"
+                + "ON c.cars_id = dc.car_id\n"
                 + "LEFT JOIN drivers d\n"
-                + "ON c.cars_id = dr_ca.car_id\n"
+                + "ON c.cars_id = dc.car_id\n"
                 + "LEFT JOIN manufacturer m\n"
                 + "ON c.manufacturer_id = m.manufacturer_id\n"
                 + " WHERE c.cars_id = ? AND c.deleted = false";
