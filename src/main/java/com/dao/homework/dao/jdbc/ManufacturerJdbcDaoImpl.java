@@ -16,16 +16,10 @@ import java.util.Optional;
 
 @Dao
 public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
-    private static final String TABLE_NAME = "manufacturer";
-    private static final String MANUFACTURER_NAME = "manufacturer_name";
-    private static final String MANUFACTURER_COUNTRY = "manufacturer_country";
-    private static final String MANUFACTURER_ID = "manufacturer_id";
-    private static final String DELETED = "deleted";
 
     @Override
     public Manufacturer create(Manufacturer manufacturer) {
-        String query = "INSERT INTO " + TABLE_NAME
-                + " (" + MANUFACTURER_NAME + "," + MANUFACTURER_COUNTRY + ") VALUES (?, ?)";
+        String query = "INSERT INTO manufacturer (manufacturer_name, manufacturer_country) VALUES (?, ?)";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query,
                         Statement.RETURN_GENERATED_KEYS)) {
@@ -45,8 +39,7 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
 
     @Override
     public Optional<Manufacturer> getById(Long manufacturerId) {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + MANUFACTURER_ID
-                + "=? AND " + DELETED + " = false";
+        String query = "SELECT * FROM manufacturer WHERE manufacturer_id =? AND deleted = false";
         Manufacturer manufacturer = null;
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
@@ -64,10 +57,8 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
 
     @Override
     public Manufacturer update(Manufacturer manufacturer) {
-        String query = "UPDATE " + TABLE_NAME + " SET " + MANUFACTURER_NAME
-                + "= ?, " + MANUFACTURER_COUNTRY + "= ? "
-                + " WHERE " + MANUFACTURER_ID
-                + "= ? AND " + DELETED + " = false";
+        String query = "UPDATE manufacturer SET manufacturer_name = ?, manufacturer_country = ? "
+                + " WHERE manufacturer_id = ? AND deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, manufacturer.getName());
@@ -82,9 +73,7 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
 
     @Override
     public boolean delete(Long manufacturerId) {
-        String query = "UPDATE " + TABLE_NAME + " SET " + DELETED
-                + "= ?  WHERE " + MANUFACTURER_ID
-                + "= ?";
+        String query = "UPDATE manufacturer  SET deleted = ?  WHERE manufacturer_id = ?";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setBoolean(1, true);
@@ -98,7 +87,7 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
 
     @Override
     public List<Manufacturer> getAll() {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + DELETED + " = false";
+        String query = "SELECT * FROM manufacturer WHERE deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery(query);
@@ -114,9 +103,9 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
 
     private Manufacturer getManufacturer(ResultSet resultSet) throws SQLException {
         Manufacturer manufacturer = new Manufacturer(resultSet
-                .getObject(MANUFACTURER_NAME, String.class),
-                resultSet.getObject(MANUFACTURER_COUNTRY, String.class));
-        manufacturer.setId(resultSet.getObject(MANUFACTURER_ID, Long.class));
+                .getObject("manufacturer_name", String.class),
+                resultSet.getObject("manufacturer_country", String.class));
+        manufacturer.setId(resultSet.getObject("manufacturer_id", Long.class));
         return manufacturer;
     }
 }

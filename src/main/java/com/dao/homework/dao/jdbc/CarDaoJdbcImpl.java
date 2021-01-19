@@ -52,7 +52,8 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "ON c.cars_id = dc.car_id\n"
                 + "LEFT JOIN manufacturer m\n"
                 + "ON c.manufacturer_id = m.manufacturer_id\n"
-                + " WHERE c.cars_id = ? AND c.deleted = false";
+                + " WHERE c.cars_id = ? AND c.deleted = false"
+                + " AND d.deleted = false";
         Car car = null;
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
@@ -125,7 +126,8 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "ON c.cars_id = dc.car_id\n"
                 + "LEFT JOIN manufacturer m\n"
                 + "ON c.manufacturer_id = m.manufacturer_id "
-                + "WHERE c.deleted = false";
+                + "WHERE c.deleted = false"
+                + " AND d.deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -153,7 +155,8 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "LEFT JOIN manufacturer m\n"
                 + "ON c.manufacturer_id = m.manufacturer_id\n"
                 + "WHERE d.drivers_id = ?"
-                + " AND d.deleted = false";
+                + " AND d.deleted = false"
+                + " AND c.deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, driverId);
