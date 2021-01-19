@@ -19,7 +19,8 @@ public class ManufacturerJdbcDaoImpl implements ManufacturerDao {
 
     @Override
     public Manufacturer create(Manufacturer manufacturer) {
-        String query = "INSERT INTO manufacturer (manufacturer_name, manufacturer_country) VALUES (?, ?)";
+        String query = "INSERT INTO manufacturer (manufacturer_name, manufacturer_country) "
+                +"VALUES (?, ?)";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query,
                         Statement.RETURN_GENERATED_KEYS)) {
