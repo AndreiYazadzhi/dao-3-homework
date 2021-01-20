@@ -6,22 +6,22 @@
 <body>
 <h1>Hello world!</h1>
 
-<form method="get" action="${pageContext.request.contextPath}/createDriver">
+<form method="get" action="${pageContext.request.contextPath}/drivers/add">
     <button type="submit">
         Create Driver
     </button>
 </form>
-<form method="get" action="${pageContext.request.contextPath}/createManufacturer">
+<form method="get" action="${pageContext.request.contextPath}/manufacturers/add">
     <button type="submit">
         Create Manufacturer
     </button>
 </form>
-<form method="get" action="${pageContext.request.contextPath}/createCar">
+<form method="get" action="${pageContext.request.contextPath}/cars/add">
     <button type="submit">
         Create Car
     </button>
 </form>
-<form method="get" action="${pageContext.request.contextPath}/addDriverToCar">
+<form method="get" action="${pageContext.request.contextPath}/drivers/add">
     <button type="submit">
         Add driver to Car
     </button>
