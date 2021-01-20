@@ -79,9 +79,9 @@ public class CarDaoJdbcImpl implements CarDao {
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement updateCarStmt = connection.prepareStatement(updateQuery);
                 PreparedStatement deleteDriversStmt =
-                        connection.prepareStatement(deleteDriversQuery);
+                          connection.prepareStatement(deleteDriversQuery);
                 PreparedStatement insertDriversStmt =
-                        connection.prepareStatement(insertDriversQuery)) {
+                          connection.prepareStatement(insertDriversQuery)) {
             updateCarStmt.setLong(1, car.getManufacturer().getId());
             updateCarStmt.setString(2, car.getModel());
             updateCarStmt.setLong(3, carId);
@@ -123,16 +123,13 @@ public class CarDaoJdbcImpl implements CarDao {
                 + "LEFT JOIN drivers_cars dc\n"
                 + "ON c.cars_id = dc.car_id\n"
                 + "LEFT JOIN drivers d\n"
-                + "ON c.cars_id = dc.car_id\n"
+                + "ON c.cars_id = dc.car_id AND d.deleted = false\n"
                 + "LEFT JOIN manufacturer m\n"
                 + "ON c.manufacturer_id = m.manufacturer_id "
-                + "WHERE c.deleted = false"
-                + " AND d.deleted = false";
+                + "WHERE c.deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query,
-                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY)) {
-            ResultSet resultSet = statement.executeQuery(query);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
             List<Car> allCars = new ArrayList<>();
             while (resultSet.next()) {
                 allCars.add(getCarInstance(resultSet));
@@ -191,12 +188,18 @@ public class CarDaoJdbcImpl implements CarDao {
         Car car = new Car(resultSet.getObject("cars_model", String.class),
                 getManufacturerInstance(resultSet));
         car.setId(resultSet.getObject("cars_id", Long.class));
-        Driver driver = getDriverInstance(resultSet);
-        List<Driver> drivers = new ArrayList<>();
-        while (resultSet.next() && driver.getId() != null) {
-            drivers.add(getDriverInstance(resultSet));
-        }
+        List<Driver> drivers = getDrivers(resultSet, car.getId());
         car.setDrivers(drivers);
         return car;
+    }
+
+    private List<Driver> getDrivers(ResultSet resultSet, Long carId) throws SQLException {
+        List<Driver> drivers = new ArrayList<>();
+        do {
+            Driver driver = getDriverInstance(resultSet);
+            drivers.add(driver);
+        } while (resultSet.next() && resultSet.getObject("cars_id", Long.class).equals(carId));
+        resultSet.previous();
+        return drivers;
     }
 }

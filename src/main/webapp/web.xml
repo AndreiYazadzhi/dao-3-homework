@@ -4,15 +4,127 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-<servlet>
-    <servlet-name>index</servlet-name>
-    <servlet-class>
-        com.dao.homework.controllers.IndexController
-    </servlet-class>
-</servlet>
-
+    <servlet>
+        <servlet-name>index</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.IndexController
+        </servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
-        <url-pattern>/index</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>drivers</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.GetDriversController
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>drivers</servlet-name>
+        <url-pattern>/drivers</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>createCar</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.CreateCarController
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>createCar</servlet-name>
+        <url-pattern>/createCar</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>createDriver</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.CreateDriverController
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>createDriver</servlet-name>
+        <url-pattern>/createDriver</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>createManufacturer</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.CreateManufacturerController
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>createManufacturer</servlet-name>
+        <url-pattern>/createManufacturer</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addDriverToCar</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.AddDriverToCarController
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addDriverToCar</servlet-name>
+        <url-pattern>/addDriverToCar</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>cars</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.GetCarsController
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cars</servlet-name>
+        <url-pattern>/cars</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>manufacturers</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.GetManufacturersController
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>manufacturers</servlet-name>
+        <url-pattern>/manufacturers</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteManufacturer</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.DeleteManufacturerController
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteManufacturer</servlet-name>
+        <url-pattern>/deleteManufacturer</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteCar</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.DeleteCarController
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteCar</servlet-name>
+        <url-pattern>/deleteCar</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteDriver</servlet-name>
+        <servlet-class>
+            com.dao.homework.controllers.DeleteDriverController
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteDriver</servlet-name>
+        <url-pattern>/deleteDriver</url-pattern>
+    </servlet-mapping>
+
 </web-app>
+
+
