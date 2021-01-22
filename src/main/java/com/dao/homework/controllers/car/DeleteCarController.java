@@ -1,4 +1,4 @@
-package com.dao.homework.controllers.cars;
+package com.dao.homework.controllers.car;
 
 import com.dao.homework.lib.Injector;
 import com.dao.homework.service.CarService;

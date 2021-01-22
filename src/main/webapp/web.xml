@@ -18,7 +18,7 @@
     <servlet>
         <servlet-name>drivers</servlet-name>
         <servlet-class>
-            com.dao.homework.controllers.drivers.GetDriversController
+            com.dao.homework.controllers.driver.GetDriversController
         </servlet-class>
     </servlet>
     <servlet-mapping>
@@ -29,7 +29,7 @@
     <servlet>
         <servlet-name>createCar</servlet-name>
         <servlet-class>
-            com.dao.homework.controllers.cars.CreateCarController
+            com.dao.homework.controllers.car.CreateCarController
         </servlet-class>
     </servlet>
     <servlet-mapping>
@@ -40,7 +40,7 @@
     <servlet>
         <servlet-name>createDriver</servlet-name>
         <servlet-class>
-            com.dao.homework.controllers.drivers.CreateDriverController
+            com.dao.homework.controllers.driver.CreateDriverController
         </servlet-class>
     </servlet>
     <servlet-mapping>
@@ -51,7 +51,7 @@
     <servlet>
         <servlet-name>createManufacturer</servlet-name>
         <servlet-class>
-            com.dao.homework.controllers.manufacturers.CreateManufacturerController
+            com.dao.homework.controllers.manufacturer.CreateManufacturerController
         </servlet-class>
     </servlet>
     <servlet-mapping>
@@ -62,7 +62,7 @@
     <servlet>
         <servlet-name>addDriverToCar</servlet-name>
         <servlet-class>
-            com.dao.homework.controllers.cars.AddDriverToCarController
+            com.dao.homework.controllers.car.AddDriverToCarController
         </servlet-class>
     </servlet>
     <servlet-mapping>
@@ -73,7 +73,7 @@
     <servlet>
         <servlet-name>cars</servlet-name>
         <servlet-class>
-            com.dao.homework.controllers.cars.GetCarsController
+            com.dao.homework.controllers.car.GetCarsController
         </servlet-class>
     </servlet>
     <servlet-mapping>
@@ -84,7 +84,7 @@
     <servlet>
         <servlet-name>manufacturers</servlet-name>
         <servlet-class>
-            com.dao.homework.controllers.manufacturers.GetManufacturersController
+            com.dao.homework.controllers.manufacturer.GetManufacturersController
         </servlet-class>
     </servlet>
     <servlet-mapping>
@@ -95,7 +95,7 @@
     <servlet>
         <servlet-name>deleteManufacturer</servlet-name>
         <servlet-class>
-            com.dao.homework.controllers.manufacturers.DeleteManufacturerController
+            com.dao.homework.controllers.manufacturer.DeleteManufacturerController
         </servlet-class>
     </servlet>
     <servlet-mapping>
@@ -106,7 +106,7 @@
     <servlet>
         <servlet-name>deleteCar</servlet-name>
         <servlet-class>
-            com.dao.homework.controllers.cars.DeleteCarController
+            com.dao.homework.controllers.car.DeleteCarController
         </servlet-class>
     </servlet>
     <servlet-mapping>
@@ -117,7 +117,7 @@
     <servlet>
         <servlet-name>deleteDriver</servlet-name>
         <servlet-class>
-            com.dao.homework.controllers.drivers.DeleteDriverController
+            com.dao.homework.controllers.driver.DeleteDriverController
         </servlet-class>
     </servlet>
     <servlet-mapping>
