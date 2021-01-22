@@ -1,4 +1,4 @@
-package com.dao.homework.controllers;
+package com.dao.homework.controllers.cars;
 
 import com.dao.homework.lib.Injector;
 import com.dao.homework.model.Car;
@@ -19,6 +19,6 @@ public class GetCarsController extends HttpServlet {
             throws ServletException, IOException {
         List<Car> allCars = carService.getAll();
         request.setAttribute("cars", allCars);
-        request.getRequestDispatcher("/WEB-INF/views/cars.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/cars/cars.jsp").forward(request, response);
     }
 }

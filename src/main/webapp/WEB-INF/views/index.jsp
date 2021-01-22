@@ -21,7 +21,7 @@
         Create Car
     </button>
 </form>
-<form method="get" action="${pageContext.request.contextPath}/drivers/add">
+<form method="get" action="${pageContext.request.contextPath}/cars/drivers/add">
     <button type="submit">
         Add driver to Car
     </button>

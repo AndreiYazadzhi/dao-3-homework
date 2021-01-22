@@ -1,4 +1,4 @@
-package com.dao.homework.controllers;
+package com.dao.homework.controllers.cars;
 
 import com.dao.homework.lib.Injector;
 import com.dao.homework.model.Car;
@@ -20,14 +20,15 @@ public class CreateCarController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/createCar.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/cars/createCar.jsp")
+                .forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String carModel = String.valueOf(request.getParameter("model"));
-        Long manufacturerId = Long.valueOf(request.getParameter("manufacturerId"));
+        String carModel = request.getParameter("model");
+        Long manufacturerId = Long.valueOf(request.getParameter("manufacturer_id"));
         Manufacturer manufacturer = manufacturerService.get(manufacturerId);
         carService.create(new Car(carModel, manufacturer));
         response.sendRedirect("/cars");

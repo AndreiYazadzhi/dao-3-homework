@@ -38,7 +38,7 @@
         </tr>
     </c:forEach>
     <form method="post" action="${pageContext.request.contextPath}/cars/delete">
-        Please enter Car Id:<input type="number" name="carId" required>
+        Please enter Car Id:<input type="number" name="car_id" required>
         <button type="submit">
             Delete
         </button>

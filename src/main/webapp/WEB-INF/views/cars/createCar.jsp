@@ -8,7 +8,7 @@
 <form method="post" action="${pageContext.request.contextPath}/cars/add">
 
     Please enter Car model:<input type="text" name="model" required>
-    Please enter manufacturer id:<input type="number" name="manufacturerId" required>
+    Please enter manufacturer id:<input type="number" name="manufacturer_id" required>
 
     <button type="submit">Create</button>
 </form>

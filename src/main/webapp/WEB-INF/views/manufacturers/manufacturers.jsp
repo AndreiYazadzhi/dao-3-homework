@@ -26,7 +26,7 @@
         </tr>
     </c:forEach>
     <form method="post" action="${pageContext.request.contextPath}/manufacturers/delete">
-        Please enter Manufacturer Id:<input type="number" name="manufacturerId" required>
+        Please enter Manufacturer Id:<input type="number" name="manufacturer_id" required>
         <button type="submit">
             Delete
         </button>
