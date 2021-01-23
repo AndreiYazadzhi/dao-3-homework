@@ -45,4 +45,7 @@ ALTER TABLE `taxi_service`.`drivers_cars`
     ADD COLUMN `id` INT NOT NULL AUTO_INCREMENT AFTER `car_id`,
 ADD PRIMARY KEY (`id`);
 ;
+ALTER TABLE `taxi_service`.`drivers`
+    ADD COLUMN `login` VARCHAR(45) NOT NULL AFTER `deleted`,
+    ADD COLUMN `password` VARCHAR(45) NOT NULL AFTER `login`;
 
