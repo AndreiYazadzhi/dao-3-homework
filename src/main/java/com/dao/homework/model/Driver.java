@@ -10,11 +10,10 @@ public class Driver {
     private String password;
 
     public Driver(String name, String licenseNumber,
-                  String login, String password) {
+                  String login) {
         this.name = name;
         this.licenseNumber = licenseNumber;
         this.login = login;
-        this.password = password;
     }
 
     public String getLogin() {

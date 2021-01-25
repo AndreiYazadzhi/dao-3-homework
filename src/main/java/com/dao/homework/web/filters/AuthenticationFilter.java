@@ -41,11 +41,10 @@ public class AuthenticationFilter implements Filter {
         }
 
         Long driverId = (Long) req.getSession().getAttribute(DRIVER_ID);
-        if (driverId == null || driverService.get(driverId) == null) {
+        if (driverId == null) {
             resp.sendRedirect("/login");
             return;
         }
-
         filterChain.doFilter(req, resp);
     }
 

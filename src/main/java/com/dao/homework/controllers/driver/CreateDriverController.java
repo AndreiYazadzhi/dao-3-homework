@@ -28,7 +28,9 @@ public class CreateDriverController extends HttpServlet {
         String driverLicense = request.getParameter("license_number");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        driverService.create(new Driver(driverName, driverLicense, login, password));
+        Driver driver = new Driver(driverName, driverLicense, login);
+        driver.setPassword(password);
+        driverService.create(driver);
         response.sendRedirect("/drivers");
     }
 }
