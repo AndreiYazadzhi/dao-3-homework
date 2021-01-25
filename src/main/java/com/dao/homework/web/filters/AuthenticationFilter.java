@@ -3,6 +3,8 @@ package com.dao.homework.web.filters;
 import com.dao.homework.lib.Injector;
 import com.dao.homework.service.DriverService;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AuthenticationFilter implements Filter {
+    public static final Set<String> test = new HashSet<>();
     private static final String DRIVER_ID = "drivers_id";
     private static final Injector injector = Injector.getInstance("com.dao.homework");
     private final DriverService driverService = (DriverService) injector
@@ -20,7 +23,8 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-
+        test.add("/login");
+        test.add("/drivers/add");
     }
 
     @Override
@@ -31,8 +35,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
         String url = req.getServletPath();
-        if (url.equals(req.getContextPath() + "/login")
-                || url.equals(req.getContextPath() + "/drivers/add")) {
+        if (test.contains(url)) {
             filterChain.doFilter(req, resp);
             return;
         }

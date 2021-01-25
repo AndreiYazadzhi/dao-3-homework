@@ -1,5 +1,7 @@
 package com.dao.homework.model;
 
+import java.util.Objects;
+
 public class Driver {
     private Long id;
     private String name;
@@ -53,6 +55,26 @@ public class Driver {
 
     public void setLicenseNumber(String licenseNumber) {
         this.licenseNumber = licenseNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Driver driver = (Driver) o;
+        return id.equals(driver.id) && name.equals(driver.name)
+                && licenseNumber.equals(driver.licenseNumber)
+                && login.equals(driver.login)
+                && password.equals(driver.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, licenseNumber, login, password);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.dao.homework.lib.Inject;
 import com.dao.homework.lib.Service;
 import com.dao.homework.model.Driver;
 import com.dao.homework.service.DriverService;
+import java.util.Optional;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -13,11 +14,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Driver login(String login, String password) {
-        Driver driverFromDb = driverService.findByLogin(login)
-                .orElseThrow(() -> new AuthenticationException("Incorrect username or password"));
-        if (driverFromDb.getPassword().equals(password)
-                && driverFromDb.getLogin().equals(login)) {
-            return driverFromDb;
+        Optional<Driver> driverFromDb = driverService.findByLogin(login);
+        if (driverFromDb.isPresent() && driverFromDb.get()
+                .getPassword().equals(password)
+                && driverFromDb.get().getLogin().equals(login)) {
+            return driverFromDb.get();
         }
         throw new AuthenticationException("Incorrect username or password");
     }
