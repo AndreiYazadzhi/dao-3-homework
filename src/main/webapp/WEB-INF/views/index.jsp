@@ -44,5 +44,11 @@
         Show manufacturers
     </button>
 </form>
+
+<form method="get" action="${pageContext.request.contextPath}/drivers/cars/get">
+    <button type="submit">
+        Get my current cars
+    </button>
+</form>
 </body>
 </html>

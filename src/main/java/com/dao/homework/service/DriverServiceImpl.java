@@ -5,6 +5,7 @@ import com.dao.homework.lib.Inject;
 import com.dao.homework.lib.Service;
 import com.dao.homework.model.Driver;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DriverServiceImpl implements DriverService {
@@ -34,5 +35,10 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public boolean delete(Long id) {
         return driverDao.delete(id);
+    }
+
+    @Override
+    public Optional<Driver> findByLogin(String login) {
+        return driverDao.getByLogin(login);
     }
 }
